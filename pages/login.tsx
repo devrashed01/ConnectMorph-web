@@ -1,12 +1,44 @@
+import cookie from "js-cookie";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { useMutation } from "react-query";
+
+import { useRouter } from "next/router";
+import axiosPrivate from "../config/axios.config";
 
 const Login = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { mutateAsync } = useMutation<
+    {
+      data: {
+        token: string;
+        message: string;
+      };
+    },
+    Error,
+    {
+      email: string;
+      password: string;
+    }
+  >((payload) => axiosPrivate.post("/auth/login", payload), {
+    onSuccess: () => {
+      router.push("/");
+    },
+  });
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // await login(email, password);
+    toast.promise(mutateAsync({ email, password }), {
+      loading: "Logging in...",
+      success: (data) => {
+        cookie.set("access_token", data?.data?.token);
+        return "Login success";
+      },
+      error: (err) => err.response.data?.message ?? "Something went wrong",
+    });
   };
 
   return (
