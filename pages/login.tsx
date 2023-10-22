@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import cookie from "js-cookie";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -28,6 +30,10 @@ const Login = () => {
       router.push("/");
     },
   });
+
+  useEffect(() => {
+    cookie.remove("access_token");
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
