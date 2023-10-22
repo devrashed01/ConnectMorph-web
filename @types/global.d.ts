@@ -14,4 +14,5 @@ type User = {
   __v: number;
   bio: string;
   location: string;
+  avatar?: string;
 };

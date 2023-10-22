@@ -1,19 +1,15 @@
-import { useEffect } from "react";
-
 import cookie from "js-cookie";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import { useMutation } from "react-query";
 
-import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 import axiosPrivate from "../config/axios.config";
 
 const Login = () => {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { mutateAsync } = useMutation<
+  const { mutate, isLoading } = useMutation<
     {
       data: {
         token: string;
@@ -26,25 +22,18 @@ const Login = () => {
       password: string;
     }
   >((payload) => axiosPrivate.post("/auth/login", payload), {
-    onSuccess: () => {
-      router.push("/");
+    onSuccess: (data) => {
+      cookie.set("access_token", data?.data?.token);
+      window.location.href = "/";
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message ?? "Something went wrong");
     },
   });
 
-  useEffect(() => {
-    cookie.remove("access_token");
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    toast.promise(mutateAsync({ email, password }), {
-      loading: "Logging in...",
-      success: (data) => {
-        cookie.set("access_token", data?.data?.token);
-        return "Login success";
-      },
-      error: (err) => err.response.data?.message ?? "Something went wrong",
-    });
+    mutate({ email, password });
   };
 
   return (
@@ -72,7 +61,7 @@ const Login = () => {
           className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-400"
           type="submit"
         >
-          Login
+          {isLoading ? "Loading..." : "Login"}
         </button>
       </form>
     </div>
