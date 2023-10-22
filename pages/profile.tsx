@@ -1,11 +1,12 @@
+import AuthLayout from "@/layouts/AuthLayout";
 import Header from "@/layouts/Header";
 
 const Profile = () => {
   return (
-    <div>
+    <AuthLayout>
       <Header />
       <h1>Profile</h1>
-    </div>
+    </AuthLayout>
   );
 };
 
