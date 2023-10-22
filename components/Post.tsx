@@ -1,19 +1,16 @@
 import { PropsWithChildren } from "react";
 
-type Post = {
-  author: {
-    name: string;
-  };
-  content: string;
-};
-
 const Post = ({ post }: PropsWithChildren<{ post: Post }>) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-4">
       <div className="flex items-center">
         <img
           className="w-10 h-10 rounded-full mr-4"
-          src="https://via.placeholder.com/150"
+          src={
+            post?.author.avatar
+              ? `${process.env.NEXT_PUBLIC_ASSET_URL}${post?.author.avatar}`
+              : "https://via.placeholder.com/150"
+          }
           alt="Profile"
         />
         <div>

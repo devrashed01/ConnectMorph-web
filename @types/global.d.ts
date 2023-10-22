@@ -23,6 +23,7 @@ type Post = {
     _id: string;
     username: string;
     name: string;
+    avatar?: string;
   };
   content: string;
   likes: string[];
