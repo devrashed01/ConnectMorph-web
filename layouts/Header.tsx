@@ -5,7 +5,7 @@ import { useContext } from "react";
 const Header = () => {
   const { user } = useContext(AuthContext);
   return (
-    <header className="bg-gray-900 text-white flex justify-between items-center px-4 py-3">
+    <header className="fixed w-full top-0 z-50 bg-gray-900 text-white flex justify-between items-center px-4 py-3">
       <div className="flex items-center">
         <h1 className="text-lg font-bold">ConnectMorph</h1>
       </div>
