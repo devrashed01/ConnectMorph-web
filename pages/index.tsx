@@ -1,4 +1,5 @@
 import Chat from "@/features/chat";
+import Friends from "@/features/friends";
 import AddPost from "@/features/timline/AddPost";
 import TimelinePosts from "@/features/timline/TimelinePosts";
 import AuthLayout from "@/layouts/AuthLayout";
@@ -19,8 +20,9 @@ export default function Home() {
             <TimelinePosts />
           </div>
           <div className="w-1/4 flex flex-col gap-5 sticky top-[75px] overflow-auto h-[calc(100vh-75px)]">
-            <div className="border border-slate-500 rounded-xl h-64"></div>
+            {/* <div className="border border-slate-500 rounded-xl h-64"></div> */}
             <Chat />
+            <Friends />
           </div>
         </div>
       </>

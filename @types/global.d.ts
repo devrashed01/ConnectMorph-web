@@ -17,6 +17,15 @@ type User = {
   avatar?: string;
 };
 
+type Fiends = {
+  _id: string;
+  username: string;
+  name: string;
+  followers: string[];
+  following: string[];
+  avatar?: string;
+};
+
 type Post = {
   _id: string;
   author: {

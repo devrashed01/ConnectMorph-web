@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import cookie from "js-cookie";
+import React, { useEffect, useState } from "react";
+import { Socket, io } from "socket.io-client";
 
 interface Message {
   id: number;
@@ -8,6 +10,74 @@ interface Message {
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
+  const [socket, setSocket] = useState<Socket | null>(null);
+
+  useEffect(() => {
+    const token = cookie.get("access_token");
+    const newSocket = io("http://localhost:5000", {
+      auth: { token },
+    });
+    setSocket(newSocket);
+
+    return () => newSocket.close();
+  }, []);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("message", (message: Message) => {
+        console.log("message", message);
+        setMessages((prevMessages) => [...prevMessages, message]);
+      });
+
+      socket.on("connect", () => {
+        console.log("connected");
+      });
+
+      socket.on("disconnect", () => {
+        console.log("disconnected");
+      });
+
+      socket.on("connect_error", (err) => {
+        console.log("connect_error", err);
+      });
+
+      socket.on("connect_timeout", (err) => {
+        console.log("connect_timeout", err);
+      });
+
+      socket.on("error", (err) => {
+        console.log("error", err);
+      });
+
+      socket.on("reconnect", (attemptNumber) => {
+        console.log("reconnect", attemptNumber);
+      });
+
+      socket.on("reconnect_attempt", (attemptNumber) => {
+        console.log("reconnect_attempt", attemptNumber);
+      });
+
+      socket.on("reconnecting", (attemptNumber) => {
+        console.log("reconnecting", attemptNumber);
+      });
+
+      socket.on("reconnect_error", (err) => {
+        console.log("reconnect_error", err);
+      });
+
+      socket.on("reconnect_failed", () => {
+        console.log("reconnect_failed");
+      });
+
+      socket.on("ping", () => {
+        console.log("ping");
+      });
+
+      socket.on("pong", (latency) => {
+        console.log("pong", latency);
+      });
+    }
+  }, [socket]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -22,6 +92,9 @@ const Chat: React.FC = () => {
       };
       setMessages([...messages, newMessage]);
       setInputValue("");
+      if (socket) {
+        socket.emit("message", inputValue.trim());
+      }
     }
   };
 
