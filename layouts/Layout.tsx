@@ -21,7 +21,7 @@ const Layout = ({ children }: PropsWithChildren) => {
   }
   return (
     <>
-      <div className="mr-16 pr-4">{children}</div>
+      <div className="mr-16 px-4">{children}</div>
       <ManNav />
     </>
   );

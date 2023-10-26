@@ -13,21 +13,25 @@ const Friends = () => {
     Error
   >("friends", () => axiosPrivate.get("/user/friends"));
 
-  console.log(data, "friends");
   return (
     <div>
       Friends:
       <p>{data?.data.message}</p>
-      {data?.data.friends?.map((friend) => (
-        <p className="flex items-center gap-5" key={friend._id}>
-          <img
-            className="h-12 w-12 rounded-full"
-            src={assetUrl + friend.avatar}
-            alt=""
-          />{" "}
-          {friend.username}
-        </p>
-      ))}
+      <div className="flex flex-col gap-4 mt-5">
+        {data?.data.friends?.map((friend) => (
+          <p
+            className="flex items-center gap-5 cursor-pointer"
+            key={friend._id}
+          >
+            <img
+              className="h-12 w-12 rounded-full"
+              src={assetUrl + friend.avatar}
+              alt=""
+            />{" "}
+            {friend.username}
+          </p>
+        ))}
+      </div>
     </div>
   );
 };
