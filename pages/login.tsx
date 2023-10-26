@@ -50,7 +50,7 @@ const Login = () => {
       title="Login"
       footerContent={
         <p className="mt-4 text-sm text-gray-400">
-          Don't have an account?{" "}
+          {`Don't have an account?`}{" "}
           <Link href="/register" className="text-gray-300">
             Register
           </Link>
