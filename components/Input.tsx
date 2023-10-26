@@ -3,7 +3,7 @@ import React from "react";
 
 type Color = "primary" | "default" | "secondary";
 type Size = "sm" | "md" | "lg";
-type InputType = "textarea" | "text" | "password";
+type InputType = "textarea" | "text" | "password" | "email";
 
 type InputProps = {
   color?: Color;
@@ -38,7 +38,18 @@ const Input: React.FC<InputProps> = ({
   onChange,
   ...inputProps
 }) => {
-  const inputClassName = "";
+  const classNames = clsx(
+    "w-full text-gray-700 overflow-hidden border border-primary-bg rounded-[5px] focus:outline-none",
+    {
+      "border-red-600": !!helperText,
+      "border-blue-500": color === "primary",
+      "border-gray-700": color === "default",
+      "border-green-500": color === "secondary",
+      "text-sm h-9": size === "sm",
+      "text-sm h-11": size === "md",
+      "text-lg h-14": size === "lg",
+    }
+  );
   return (
     <div className="w-full">
       {label && (
@@ -51,27 +62,15 @@ const Input: React.FC<InputProps> = ({
       {type === "textarea" ? (
         <textarea
           onChange={onChange as any}
-          className={`${inputClassName}`}
+          className={`${classNames}`}
           {...inputProps}
         />
       ) : (
-        <div
-          className={clsx(
-            "w-full mb-4 text-gray-700 border border-primary-bg rounded-[5px] focus:outline-none",
-            {
-              "border-red-600": !!helperText,
-              "border-blue-500": color === "primary",
-              "border-gray-700": color === "default",
-              "border-green-500": color === "secondary",
-              "text-sm h-9": size === "sm",
-              "text-sm h-11": size === "md",
-              "text-lg h-14": size === "lg",
-            }
-          )}
-        >
+        <div className={classNames}>
           {prefix && prefix}
           <input
             type={type}
+            onChange={onChange}
             className="w-full px-4 py-2 h-full bg-transparent text-white outline-none border-none"
             {...inputProps}
           />
@@ -83,7 +82,7 @@ const Input: React.FC<InputProps> = ({
           {value?.length}/{charLimit}
         </div>
       )}
-      {helperText && <div>{helperText}</div>}
+      {helperText && <p className="text-xs text-red-500 mt-2">{helperText}</p>}
     </div>
   );
 };

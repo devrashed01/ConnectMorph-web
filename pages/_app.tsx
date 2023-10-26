@@ -18,7 +18,24 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>
         <Component {...pageProps} />
-        <Toaster position="top-center" reverseOrder={false} />
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          toastOptions={{
+            success: {
+              style: {
+                background: "#415433",
+                color: "#fff",
+              },
+            },
+            error: {
+              style: {
+                background: "#472525",
+                color: "#fff",
+              },
+            },
+          }}
+        />
       </AuthContextProvider>
     </QueryClientProvider>
   );
