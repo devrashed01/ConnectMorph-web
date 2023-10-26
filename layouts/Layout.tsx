@@ -2,6 +2,7 @@ import axiosPrivate from "@/config/axios.config";
 import { AuthContext } from "@/context/AuthContext";
 import { PropsWithChildren, useContext } from "react";
 import { useQuery } from "react-query";
+import ManNav from "./MainNav";
 
 const Layout = ({ children }: PropsWithChildren) => {
   const { setUser } = useContext(AuthContext);
@@ -18,7 +19,12 @@ const Layout = ({ children }: PropsWithChildren) => {
   if (!data) {
     return null;
   }
-  return children;
+  return (
+    <>
+      <div className="mr-16 pr-4">{children}</div>
+      <ManNav />
+    </>
+  );
 };
 
 export default Layout;

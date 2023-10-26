@@ -63,12 +63,14 @@ const Login = () => {
         autoComplete="off"
       >
         <Input
+          name="username"
           placeholder="Username"
           value={state.username}
           onChange={changeHandler}
         />
         <Input
           type="password"
+          name="password"
           placeholder="Password"
           value={state.password}
           onChange={changeHandler}
