@@ -1,8 +1,9 @@
 import axiosPrivate from "@/config/axios.config";
 import React, { useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 const AddPost = () => {
+  const queryClient = useQueryClient();
   const [content, setContent] = useState("");
 
   const { mutate } = useMutation(
@@ -10,6 +11,7 @@ const AddPost = () => {
     {
       onSuccess: () => {
         setContent("");
+        queryClient.invalidateQueries("get-timeline-posts");
       },
     }
   );
