@@ -2,15 +2,12 @@ import Chat from "@/features/chat";
 import Friends from "@/features/friends";
 import AddPost from "@/features/timline/AddPost";
 import TimelinePosts from "@/features/timline/TimelinePosts";
-import AuthLayout from "@/layouts/AuthLayout";
 import Header from "@/layouts/Header";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import Layout from "@/layouts/Layout";
 
 export default function Home() {
   return (
-    <AuthLayout>
+    <Layout>
       <>
         <Header />
         <div className="flex gap-5 pt-[75px]">
@@ -26,6 +23,6 @@ export default function Home() {
           </div>
         </div>
       </>
-    </AuthLayout>
+    </Layout>
   );
 }

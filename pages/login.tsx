@@ -2,12 +2,20 @@ import cookie from "js-cookie";
 import { useState } from "react";
 import { useMutation } from "react-query";
 
+import Input from "@/components/Input";
+import AuthLayout from "@/layouts/AuthLayout";
 import toast from "react-hot-toast";
 import axiosPrivate from "../config/axios.config";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [state, setState] = useState({
+    username: "",
+    password: "",
+  });
+
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   const { mutate, isLoading } = useMutation<
     {
@@ -18,7 +26,7 @@ const Login = () => {
     },
     Error,
     {
-      email: string;
+      username: string;
       password: string;
     }
   >((payload) => axiosPrivate.post("/auth/login", payload), {
@@ -33,38 +41,34 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutate({ email, password });
+    mutate(state);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="mb-4 text-4xl font-bold text-gray-800">Login</h1>
+    <AuthLayout>
       <form
-        className="flex flex-col items-center justify-center w-full max-w-sm"
+        className="relative z-10 flex flex-col items-center justify-center w-full max-w-sm"
         onSubmit={handleSubmit}
       >
-        <input
-          className="w-full px-4 py-2 mb-4 text-gray-700 bg-gray-200 border-2 border-gray-200 rounded-lg focus:outline-none focus:bg-white focus:border-blue-500"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+        <Input
+          placeholder="Username"
+          value={state.username}
+          onChange={changeHandler}
         />
-        <input
-          className="w-full px-4 py-2 mb-4 text-gray-700 bg-gray-200 border-2 border-gray-200 rounded-lg focus:outline-none focus:bg-white focus:border-blue-500"
+        <Input
           type="password"
           placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={state.password}
+          onChange={changeHandler}
         />
         <button
-          className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-400"
+          className="w-32 ml-auto h-11 px-4 text-white bg-darkest-bg rounded-[5px]"
           type="submit"
         >
           {isLoading ? "Loading..." : "Login"}
         </button>
       </form>
-    </div>
+    </AuthLayout>
   );
 };
 

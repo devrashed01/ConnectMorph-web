@@ -1,12 +1,12 @@
-import AuthLayout from "@/layouts/AuthLayout";
 import Header from "@/layouts/Header";
+import Layout from "@/layouts/Layout";
 
 const Profile = () => {
   return (
-    <AuthLayout>
+    <Layout>
       <Header />
       <h1>Profile</h1>
-    </AuthLayout>
+    </Layout>
   );
 };
 
