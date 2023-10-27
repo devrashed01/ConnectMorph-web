@@ -39,7 +39,7 @@ const Input: React.FC<InputProps> = ({
   ...inputProps
 }) => {
   const classNames = clsx(
-    "w-full text-gray-700 overflow-hidden border border-primary-bg rounded-[5px] focus:outline-none",
+    "w-full text-gray-700 overflow-hidden border border-primary-bg focus:outline-none",
     {
       "border-red-600": !!helperText,
       "border-blue-500": color === "primary",

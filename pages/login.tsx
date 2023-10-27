@@ -58,7 +58,7 @@ const Login = () => {
       }
     >
       <form
-        className="relative z-10 flex flex-col items-center justify-center w-full max-w-sm"
+        className="relative z-10 flex flex-col gap-5 items-center justify-center w-full max-w-sm"
         onSubmit={handleSubmit}
         autoComplete="off"
       >
@@ -76,7 +76,7 @@ const Login = () => {
           onChange={changeHandler}
         />
         <button
-          className="w-32 ml-auto h-11 px-4 text-white bg-darkest-bg rounded-[5px]"
+          className="w-32 ml-auto h-11 px-4 text-white bg-dark-bg"
           type="submit"
         >
           {isLoading ? "Loading..." : "Login"}
